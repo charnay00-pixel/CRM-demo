@@ -3,14 +3,14 @@
 {% block title %}Dashboard — ZochAI-CRM{% endblock %}
 
 {% block content %}
-<div class="flex justify-between items-end mb-6">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 mb-6">
     <h1 class="text-2xl font-bold text-gray-900">Welcome, {{ user.display_name }}</h1>
     <span class="text-sm text-gray-400 font-medium">
         {{ "System Administrator" if user.role == "admin" else "Recruitment Partner" }}
     </span>
 </div>
 
-<div class="grid grid-cols-5 gap-4 mb-8">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
     <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
         <span class="text-2xl font-bold text-blue-700 block mb-1">{{ stats.total }}</span>
         <span class="text-xs font-medium text-gray-400">Total Students</span>
@@ -55,7 +55,7 @@
     <div class="mb-4">
         <h2 class="text-sm font-bold text-gray-900 tracking-tight uppercase">Pipeline</h2>
     </div>
-    <div class="grid grid-cols-4 gap-3 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {% for status, count in pipeline_counts.items() %}
         <div class="bg-white px-4 py-2.5 rounded-lg border border-gray-100 shadow-sm flex justify-between items-center">
             <span class="text-xs font-medium text-gray-500">{{ status }}</span>
