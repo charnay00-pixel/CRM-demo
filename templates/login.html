@@ -2,17 +2,17 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Logowanie — SmartEd CRM</title>
+    <title>Logowanie — ZochAI-CRM</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     </style>
 </head>
-<body class="bg-[#0b2228] min-h-screen flex items-center justify-center">
+<body class="bg-[#0f172a] min-h-screen flex items-center justify-center">
     <div class="w-full max-w-sm">
         <div class="flex items-center justify-center space-x-2 mb-8">
-            <div class="bg-[#10b981] text-white font-bold rounded p-1.5 text-sm w-8 h-8 flex items-center justify-center">S</div>
-            <span class="text-white font-semibold text-lg">SmartEd <span class="text-[#10b981] text-xs font-mono">CRM</span></span>
+            <div class="bg-[#3b82f6] text-white font-bold rounded p-1.5 text-sm w-8 h-8 flex items-center justify-center">Z</div>
+            <span class="text-white font-semibold text-lg">ZochAI<span class="text-[#3b82f6] text-xs font-mono">-CRM</span></span>
         </div>
 
         <div class="bg-white rounded-xl shadow-sm p-8">
@@ -23,7 +23,7 @@
                 {% if messages %}
                 <div class="mb-4 space-y-2">
                     {% for category, message in messages %}
-                    <div class="text-sm px-3 py-2 rounded-md border {{ 'text-red-700 bg-red-50 border-red-200' if category == 'error' else 'text-emerald-700 bg-emerald-50 border-emerald-200' }}">
+                    <div class="text-sm px-3 py-2 rounded-md border {{ 'text-red-700 bg-red-50 border-red-200' if category == 'error' else 'text-blue-700 bg-blue-50 border-blue-200' }}">
                         {{ message }}
                     </div>
                     {% endfor %}
@@ -35,15 +35,15 @@
                 <div>
                     <label class="block text-xs font-medium text-gray-500 mb-1">Nazwa użytkownika</label>
                     <input type="text" name="username" autocomplete="username" required
-                           class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                           class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-500 mb-1">Hasło</label>
                     <input type="password" name="password" autocomplete="current-password" required
-                           class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                           class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <button type="submit"
-                        class="w-full bg-[#10b981] text-white font-medium text-sm rounded-md px-4 py-2 hover:bg-emerald-600">
+                        class="w-full bg-[#3b82f6] text-white font-medium text-sm rounded-md px-4 py-2 hover:bg-blue-600">
                     Zaloguj
                 </button>
             </form>

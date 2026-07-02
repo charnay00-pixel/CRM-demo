@@ -25,7 +25,7 @@ DATABASE = {
         {"id": "S1020", "name": "Sanah Jura", "status": "Offer Received", "recruiter": "Marta"}
     ],
     "updates": [
-        {"title": "Welcome to SmartEd", "content": "Welcome to the SmartEd CRM", "date": "2.07.2026"}
+        {"title": "Welcome to ZochAI-CRM", "content": "Welcome to the ZochAI-CRM", "date": "2.07.2026"}
     ]
 }
 

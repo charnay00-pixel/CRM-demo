@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}SmartEd CRM{% endblock %}</title>
+    <title>{% block title %}ZochAI-CRM{% endblock %}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
@@ -10,17 +10,17 @@
 </head>
 <body class="bg-[#fafafa] text-gray-800 min-h-screen flex">
 
-    <div class="w-64 bg-[#0b2228] text-gray-300 flex flex-col justify-between p-4 min-h-screen">
+    <div class="w-64 bg-[#0f172a] text-gray-300 flex flex-col justify-between p-4 min-h-screen">
         <div>
             <div class="flex items-center space-x-2 px-2 py-3 mb-6">
-                <div class="bg-[#10b981] text-white font-bold rounded p-1.5 text-sm w-8 h-8 flex items-center justify-center">S</div>
-                <span class="text-white font-semibold text-lg">SmartEd <span class="text-[#10b981] text-xs font-mono">CRM</span></span>
+                <div class="bg-[#3b82f6] text-white font-bold rounded p-1.5 text-sm w-8 h-8 flex items-center justify-center">Z</div>
+                <span class="text-white font-semibold text-lg">ZochAI<span class="text-[#3b82f6] text-xs font-mono">-CRM</span></span>
             </div>
 
             <div class="space-y-6">
                 <div>
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2">Main</p>
-                    <a href="{{ url_for('dashboard') }}" class="flex items-center space-x-2 px-3 py-2 bg-[#10b981] text-white rounded-md text-sm font-medium">
+                    <a href="{{ url_for('dashboard') }}" class="flex items-center space-x-2 px-3 py-2 bg-[#3b82f6] text-white rounded-md text-sm font-medium">
                         <span>Dashboard</span>
                     </a>
                     <a href="{{ url_for('students') }}" class="flex items-center space-x-2 px-3 py-2 text-gray-400 hover:text-white rounded-md text-sm font-medium mt-1">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="border-t border-gray-800 pt-4 text-xs text-gray-500 text-center">
-            SmartEd v1.0.0 (Prototype)
+            ZochAI-CRM v1.0.0 (Prototype)
         </div>
     </div>
 
@@ -47,7 +47,7 @@
 
         <div class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 font-bold flex items-center justify-center text-sm border border-emerald-200">
+                <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-700 font-bold flex items-center justify-center text-sm border border-blue-200">
                     {{ user.display_name[0]|upper }}
                 </div>
                 <div>
@@ -67,7 +67,7 @@
                 {% if messages %}
                 <div class="mb-4 space-y-2">
                     {% for category, message in messages %}
-                    <div class="text-sm px-3 py-2 rounded-md border {{ 'text-red-700 bg-red-50 border-red-200' if category == 'error' else 'text-emerald-700 bg-emerald-50 border-emerald-200' }}">
+                    <div class="text-sm px-3 py-2 rounded-md border {{ 'text-red-700 bg-red-50 border-red-200' if category == 'error' else 'text-blue-700 bg-blue-50 border-blue-200' }}">
                         {{ message }}
                     </div>
                     {% endfor %}

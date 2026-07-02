@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Students — SmartEd CRM{% endblock %}
+{% block title %}Students — ZochAI-CRM{% endblock %}
 
 {% block content %}
 <h1 class="text-2xl font-bold text-gray-900 mb-6">Students</h1>
@@ -30,7 +30,7 @@
                             <option value="{{ s }}" {% if s == student.status %}selected{% endif %}>{{ s }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" class="text-xs font-medium text-white bg-[#10b981] rounded-md px-3 py-1 hover:bg-emerald-600">Save</button>
+                        <button type="submit" class="text-xs font-medium text-white bg-[#3b82f6] rounded-md px-3 py-1 hover:bg-blue-600">Save</button>
                     </form>
                 </td>
             </tr>
