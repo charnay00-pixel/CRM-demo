@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # 1. PRYWATNA BAZA DANYCH (Lokalna struktura JSON - gotowa do migracji na Google Sheets API / SQLite)
 DATABASE = {
     "students": [
@@ -38,6 +40,28 @@ def get_all_students():
     return DATABASE["students"]
 
 
+def get_student_by_id(student_id):
+    return next((s for s in DATABASE["students"] if s["id"] == student_id), None)
+
+
+def user_can_edit_student(user, student):
+    if student is None:
+        return False
+    if user["role"] == "admin":
+        return True
+    return student["recruiter"] == user["recruiter_name"]
+
+
+def update_student_status(student_id, new_status):
+    if new_status not in ALL_STATUSES:
+        return False
+    student = get_student_by_id(student_id)
+    if student is None:
+        return False
+    student["status"] = new_status
+    return True
+
+
 def get_students_for_user(user):
     if user["role"] == "admin":
         return get_all_students()
@@ -46,6 +70,12 @@ def get_students_for_user(user):
 
 def get_updates():
     return DATABASE["updates"]
+
+
+def add_update(title, content):
+    now = datetime.now()
+    date_str = f"{now.day}.{now.month:02d}.{now.year}"
+    DATABASE["updates"].insert(0, {"title": title, "content": content, "date": date_str})
 
 
 def compute_stats(students):

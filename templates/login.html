@@ -19,11 +19,17 @@
             <h1 class="text-lg font-bold text-gray-900 mb-1">Zaloguj się</h1>
             <p class="text-xs text-gray-400 mb-6">Wpisz dane konta, aby zobaczyć swój panel.</p>
 
-            {% if error %}
-            <div class="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-md px-3 py-2">
-                {{ error }}
-            </div>
-            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="mb-4 space-y-2">
+                    {% for category, message in messages %}
+                    <div class="text-sm px-3 py-2 rounded-md border {{ 'text-red-700 bg-red-50 border-red-200' if category == 'error' else 'text-emerald-700 bg-emerald-50 border-emerald-200' }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
 
             <form method="post" action="{{ url_for('login') }}" class="space-y-4">
                 <div>
