@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.full_name }} — ZochAI-CRM{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <a href="{{ url_for('students.list_view') }}" class="text-xs font-semibold text-blue-600 hover:underline">&larr; All students</a>
+    <h1 class="text-2xl font-bold text-gray-900 mt-2">{{ student.full_name }}</h1>
+</div>
+
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Phone</span>
+            {{ student.phone or "—" }}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Email</span>
+            {{ student.email or "—" }}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Date of birth</span>
+            {{ student.date_of_birth.strftime("%d.%m.%Y") if student.date_of_birth else "—" }}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Nationality</span>
+            {{ student.nationality or "—" }}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Address</span>
+            {{ student.address or "—" }}{% if student.postcode %} {{ student.postcode }}{% endif %}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Consultant</span>
+            {{ student.consultant.display_name if student.consultant else "—" }}
+        </div>
+        <div>
+            <span class="text-xs font-medium text-gray-400 block">Created</span>
+            {{ student.created_at.strftime("%d.%m.%Y") }}
+        </div>
+    </div>
+</div>
+
+<div class="mb-8">
+    <h2 class="text-sm font-bold text-gray-900 tracking-tight uppercase mb-3">Applications</h2>
+    <div class="space-y-3">
+        {% for application in student.applications %}
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                <div>
+                    <h3 class="font-bold text-gray-900 text-sm">
+                        <a href="{{ url_for('universities.course_detail', course_id=application.course_id) }}" class="text-blue-600 hover:underline">{{ application.course.name }}</a>
+                        <span class="text-gray-400 font-normal">· {{ application.course.level }}</span>
+                    </h3>
+                    <p class="text-xs text-gray-500 mt-0.5">
+                        {{ application.university.name }} — {{ application.campus.name }}
+                        {% if application.intake %} · intake: {{ application.intake }}{% endif %}
+                        {% if application.application_date %} · applied: {{ application.application_date.strftime("%d.%m.%Y") }}{% endif %}
+                    </p>
+                </div>
+                {% if can_edit %}
+                <form method="post" action="{{ url_for('students.update_application_status', application_id=application.id) }}" class="flex gap-2 items-center">
+                    <select name="status" class="border border-gray-200 rounded-md text-xs px-2 py-1.5">
+                        {% for s in application_statuses %}
+                        <option value="{{ s }}" {% if s == application.status %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="text-xs font-medium text-white bg-[#3b82f6] rounded-md px-3 py-1.5 hover:bg-blue-600">Save</button>
+                </form>
+                {% else %}
+                <span class="text-xs font-medium px-2 py-0.5 rounded border text-gray-600 bg-gray-50 border-gray-200 w-fit">{{ application.status }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <p class="text-xs text-gray-400">No applications yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% if can_edit %}
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 max-w-2xl">
+    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-tight mb-3">Add application</h2>
+    <form method="post" action="{{ url_for('students.add_application', student_id=student.id) }}" class="space-y-3">
+        <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Course *</label>
+            <select name="course_id" required class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm">
+                {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.name }} ({{ course.level }}) — {{ course.university.name }}, {{ course.campus.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Intake</label>
+            <input type="text" name="intake" placeholder="np. September 2026"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm">
+        </div>
+        <button type="submit" class="bg-[#3b82f6] text-white text-sm font-medium rounded-md px-4 py-2 hover:bg-blue-600">Add application</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

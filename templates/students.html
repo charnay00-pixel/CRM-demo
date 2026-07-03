@@ -3,36 +3,38 @@
 {% block title %}Students — ZochAI-CRM{% endblock %}
 
 {% block content %}
-<h1 class="text-2xl font-bold text-gray-900 mb-6">Students</h1>
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Students</h1>
+    {% if user.role in ("admin", "consultant") %}
+    <a href="{{ url_for('students.add') }}" class="bg-[#3b82f6] text-white text-sm font-medium rounded-md px-4 py-2 hover:bg-blue-600">Add student</a>
+    {% endif %}
+</div>
 
 <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
     <table class="w-full min-w-[640px] text-sm">
         <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
             <tr>
-                <th class="text-left px-4 py-3">ID</th>
                 <th class="text-left px-4 py-3">Name</th>
-                <th class="text-left px-4 py-3">Recruiter</th>
-                <th class="text-left px-4 py-3">Status</th>
-                <th class="text-left px-4 py-3">Change status</th>
+                <th class="text-left px-4 py-3">Phone</th>
+                <th class="text-left px-4 py-3">Email</th>
+                <th class="text-left px-4 py-3">Consultant</th>
+                <th class="text-left px-4 py-3">Applications</th>
             </tr>
         </thead>
         <tbody>
             {% for student in students %}
-            <tr class="border-t border-gray-100">
-                <td class="px-4 py-3 font-mono text-xs text-gray-400">{{ student.id }}</td>
-                <td class="px-4 py-3 font-medium text-gray-900">{{ student.name }}</td>
-                <td class="px-4 py-3 text-gray-500">{{ student.recruiter }}</td>
-                <td class="px-4 py-3 text-gray-700">{{ student.status }}</td>
+            <tr class="border-t border-gray-100 hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium">
+                    <a href="{{ url_for('students.detail', student_id=student.id) }}" class="text-blue-600 hover:underline">{{ student.full_name }}</a>
+                </td>
+                <td class="px-4 py-3 text-gray-500">{{ student.phone or "—" }}</td>
+                <td class="px-4 py-3 text-gray-500">{{ student.email or "—" }}</td>
+                <td class="px-4 py-3 text-gray-500">{{ student.consultant.display_name if student.consultant else "—" }}</td>
                 <td class="px-4 py-3">
-                    <form method="post" action="{{ url_for('update_status', student_id=student.id) }}" class="flex gap-2">
-                        <select name="status" class="border border-gray-200 rounded-md text-xs px-2 py-1">
-                            {% for s in all_statuses %}
-                            <option value="{{ s }}" {% if s == student.status %}selected{% endif %}>{{ s }}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="submit" class="text-xs font-medium text-white bg-[#3b82f6] rounded-md px-3 py-1 hover:bg-blue-600">Save</button>
-                    </form>
+                    <a href="{{ url_for('students.detail', student_id=student.id) }}" class="text-blue-600 hover:underline">
+                        {{ student.applications|length }}
+                    </a>
                 </td>
             </tr>
             {% else %}

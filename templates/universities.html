@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Universities — ZochAI-CRM{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Universities</h1>
+    {% if user.role == "admin" %}
+    <a href="{{ url_for('universities.add') }}" class="bg-[#3b82f6] text-white text-sm font-medium rounded-md px-4 py-2 hover:bg-blue-600">Add university</a>
+    {% endif %}
+</div>
+
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+    <table class="w-full min-w-[640px] text-sm">
+        <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
+            <tr>
+                <th class="text-left px-4 py-3">Name</th>
+                <th class="text-left px-4 py-3">Partnership</th>
+                <th class="text-left px-4 py-3">Status</th>
+                <th class="text-left px-4 py-3">Campuses</th>
+                <th class="text-left px-4 py-3">Courses</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for university in universities %}
+            <tr class="border-t border-gray-100 hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium">
+                    <a href="{{ url_for('universities.detail', university_id=university.id) }}" class="text-blue-600 hover:underline">{{ university.name }}</a>
+                </td>
+                <td class="px-4 py-3 text-gray-500">{{ university.partnership_type }}</td>
+                <td class="px-4 py-3">
+                    <span class="text-xs font-medium px-2 py-0.5 rounded border {{ 'text-blue-700 bg-blue-50 border-blue-200' if university.status == 'Active' else 'text-gray-500 bg-gray-50 border-gray-200' }}">
+                        {{ university.status }}
+                    </span>
+                </td>
+                <td class="px-4 py-3 text-gray-700">{{ university.campuses|length }}</td>
+                <td class="px-4 py-3 text-gray-700">{{ university.courses|length }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td class="px-4 py-6 text-center text-gray-400 text-xs" colspan="5">No universities yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

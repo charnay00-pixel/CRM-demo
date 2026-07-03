@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Applications — ZochAI-CRM{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold text-gray-900 mb-6">Applications</h1>
+
+<form method="get" class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-end">
+    <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
+        <select name="status" class="border border-gray-200 rounded-md px-3 py-2 text-sm">
+            <option value="">All</option>
+            {% for s in application_statuses %}
+            <option value="{{ s }}" {% if selected_status == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="bg-[#3b82f6] text-white text-sm font-medium rounded-md px-4 py-2 hover:bg-blue-600">Filter</button>
+</form>
+
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+    <table class="w-full min-w-[720px] text-sm">
+        <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
+            <tr>
+                <th class="text-left px-4 py-3">Student</th>
+                <th class="text-left px-4 py-3">University</th>
+                <th class="text-left px-4 py-3">Course</th>
+                <th class="text-left px-4 py-3">Campus</th>
+                <th class="text-left px-4 py-3">Intake</th>
+                <th class="text-left px-4 py-3">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr class="border-t border-gray-100 hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium">
+                    <a href="{{ url_for('students.detail', student_id=application.student_id) }}" class="text-blue-600 hover:underline">{{ application.student.full_name }}</a>
+                </td>
+                <td class="px-4 py-3 text-gray-500">{{ application.university.name }}</td>
+                <td class="px-4 py-3 text-gray-500">{{ application.course.name }}</td>
+                <td class="px-4 py-3 text-gray-500">{{ application.campus.name }}</td>
+                <td class="px-4 py-3 text-gray-500">{{ application.intake or "—" }}</td>
+                <td class="px-4 py-3 text-gray-700">{{ application.status }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td class="px-4 py-6 text-center text-gray-400 text-xs" colspan="6">No applications match the filter.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

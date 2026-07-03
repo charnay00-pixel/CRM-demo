@@ -5,27 +5,21 @@
 {% block content %}
 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 mb-6">
     <h1 class="text-2xl font-bold text-gray-900">Welcome, {{ user.display_name }}</h1>
-    <span class="text-sm text-gray-400 font-medium">
-        {{ "System Administrator" if user.role == "admin" else "Recruitment Partner" }}
-    </span>
+    <span class="text-sm text-gray-400 font-medium">{{ ROLE_LABELS.get(user.role, user.role) }}</span>
 </div>
 
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-        <span class="text-2xl font-bold text-blue-700 block mb-1">{{ stats.total }}</span>
-        <span class="text-xs font-medium text-gray-400">Total Students</span>
+        <span class="text-2xl font-bold text-blue-700 block mb-1">{{ stats.students }}</span>
+        <span class="text-xs font-medium text-gray-400">Students</span>
     </div>
     <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-        <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.enquiry }}</span>
-        <span class="text-xs font-medium text-gray-400">Enquiry</span>
+        <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.applications }}</span>
+        <span class="text-xs font-medium text-gray-400">Applications</span>
     </div>
     <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-        <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.booked }}</span>
-        <span class="text-xs font-medium text-gray-400">Assessment Booked</span>
-    </div>
-    <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-        <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.accepted }}</span>
-        <span class="text-xs font-medium text-gray-400">Offer Accepted</span>
+        <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.universities }}</span>
+        <span class="text-xs font-medium text-gray-400">Universities</span>
     </div>
     <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
         <span class="text-2xl font-bold text-gray-900 block mb-1">{{ stats.enrolled }}</span>
@@ -36,15 +30,15 @@
 <div class="mb-8">
     <div class="flex justify-between items-center mb-3">
         <h2 class="text-sm font-bold text-gray-900 tracking-tight uppercase">Latest updates</h2>
-        <a href="{{ url_for('updates') }}" class="text-xs font-semibold text-blue-600 hover:underline">View all &rarr;</a>
+        <a href="{{ url_for('updates.list_view') }}" class="text-xs font-semibold text-blue-600 hover:underline">View all &rarr;</a>
     </div>
-    {% if updates %}
+    {% if latest_update %}
     <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex justify-between items-start">
         <div>
-            <h3 class="font-bold text-gray-900 text-sm">{{ updates[0].title }}</h3>
-            <p class="text-xs text-gray-500 mt-0.5">{{ updates[0].content }}</p>
+            <h3 class="font-bold text-gray-900 text-sm">{{ latest_update.title }}</h3>
+            <p class="text-xs text-gray-500 mt-0.5">{{ latest_update.content }}</p>
         </div>
-        <span class="text-xs font-mono text-gray-400">{{ updates[0].date }}</span>
+        <span class="text-xs font-mono text-gray-400">{{ latest_update.created_at.strftime("%d.%m.%Y") }}</span>
     </div>
     {% else %}
     <p class="text-xs text-gray-400">Brak aktualności.</p>
@@ -53,16 +47,16 @@
 
 <div>
     <div class="mb-4">
-        <h2 class="text-sm font-bold text-gray-900 tracking-tight uppercase">Pipeline</h2>
+        <h2 class="text-sm font-bold text-gray-900 tracking-tight uppercase">Application pipeline</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {% for status, count in pipeline_counts.items() %}
-        <div class="bg-white px-4 py-2.5 rounded-lg border border-gray-100 shadow-sm flex justify-between items-center">
+        <a href="{{ url_for('students.application_list', status=status) }}" class="bg-white px-4 py-2.5 rounded-lg border border-gray-100 shadow-sm flex justify-between items-center hover:border-blue-200">
             <span class="text-xs font-medium text-gray-500">{{ status }}</span>
             <span class="text-xs font-bold text-gray-900">{{ count }}</span>
-        </div>
+        </a>
         {% endfor %}
     </div>
-    <a href="{{ url_for('students') }}" class="text-xs font-semibold text-blue-600 hover:underline">View all students &rarr;</a>
+    <a href="{{ url_for('students.list_view') }}" class="text-xs font-semibold text-blue-600 hover:underline">View all students &rarr;</a>
 </div>
 {% endblock %}
